@@ -6,6 +6,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.NotificationManager;
 import android.content.ClipData;
@@ -249,6 +250,7 @@ public class MainActivity extends BaseActivity
     private AsyncGetSubreddit mAsyncGetSubreddit = null;
     private int headerHeight; //height of the header
     public int reloadItemNumber = -2;
+    TextView nameTextView;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -1394,7 +1396,21 @@ public class MainActivity extends BaseActivity
             hea = header.findViewById(R.id.back);
 
             drawerSubList.addHeaderView(header, null, false);
-            ((TextView) header.findViewById(R.id.name)).setText(Authentication.name);
+            nameTextView = header.findViewById(R.id.name);
+            // Fetching fakename in shared preferences
+            SharedPreferences sharedPref = MainActivity.this.getSharedPreferences("FAKEUSERNAME", Context.MODE_PRIVATE);
+            String fakeName = sharedPref.getString("FAKEUSERNAME", "");
+            if (fakeName.isEmpty()) {
+                fakeName = Authentication.name;
+            }
+            nameTextView.setText(fakeName);
+            nameTextView.setOnClickListener(new OnSingleClickListener() {
+                @Override
+                public void onSingleClick(View v) {
+                    fakenameDialog();
+                }
+            });
+
             header.findViewById(R.id.multi).setOnClickListener(new OnSingleClickListener() {
                 @Override
                 public void onSingleClick(View view) {
@@ -2205,6 +2221,37 @@ public class MainActivity extends BaseActivity
                 }
             }
         });
+    }
+
+    private void fakenameDialog() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+
+        View layout = getLayoutInflater().inflate(R.layout.fakename_dialog, null);
+        TextView title = layout.findViewById(R.id.fakename_title);
+        title.setText("Write your fake username");
+        EditText edittext = layout.findViewById(R.id.fakename_text);
+        alertDialog.setView(layout);
+
+        alertDialog.setPositiveButton("Save",
+                (dialog, which) -> {
+                    String fakeName = edittext.getText().toString();
+
+                    SharedPreferences sharedPref = MainActivity.this.getSharedPreferences("FAKEUSERNAME", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString("FAKEUSERNAME", fakeName);
+                    editor.apply();
+
+                    if (fakeName.isEmpty()) {
+                        nameTextView.setText(Authentication.name);
+                    } else {
+                        nameTextView.setText(fakeName);
+                    }
+                });
+
+        alertDialog.setNegativeButton("Cancel",
+                (dialog, which) -> dialog.cancel());
+
+        alertDialog.show();
     }
 
     public void doPageSelectedComments(int position) {
