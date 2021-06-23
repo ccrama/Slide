@@ -23,19 +23,7 @@ public class SettingsMultiColumnFragment extends PreferenceFragmentCompat {
 
         landscapeSeekbar = findPreference(getString(Key.PREF_LANDSCAPE_SEEKBAR));
         if (landscapeSeekbar != null) {
-            landscapeSeekbar.setValue(Reddit.dpWidth - 1);
-
-            // NOTE: Could this be improved?
-            landscapeSeekbar.setTitle(getResources().getQuantityString(
-                    R.plurals.landscape_columns,
-                    landscapeSeekbar.getValue() + 1,
-                    landscapeSeekbar.getValue() + 1));
-
             landscapeSeekbar.setOnPreferenceChangeListener((preference, newValue) -> {
-                landscapeSeekbar.setTitle(getResources().getQuantityString(
-                        R.plurals.landscape_columns,
-                        landscapeSeekbar.getValue() + 1,
-                        landscapeSeekbar.getValue() + 1));
                 SettingsActivity.changed = true;
                 return true;
             });
@@ -46,7 +34,7 @@ public class SettingsMultiColumnFragment extends PreferenceFragmentCompat {
     public void onDestroy() {
         super.onDestroy();
 
-        final int landscapeValue = landscapeSeekbar.getValue() + 1;
+        final int landscapeValue = landscapeSeekbar.getValue();
         Reddit.dpWidth = landscapeValue;
         Reddit.colors.edit()
                 .putInt("tabletOVERRIDE", landscapeValue)

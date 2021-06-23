@@ -7,6 +7,7 @@
         app:iconSpaceReserved="false">
 
         <SeekBarPreference
+            android:defaultValue="2"
             android:key="@string/prefKey_multicolumn_landscapeSeekbar"
             android:max="6"
             android:title="@string/multi_column_landscape"

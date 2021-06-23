@@ -1091,10 +1091,6 @@
     <string name="load_videos_internally_content">Would you like to try out the Slide Video plugin? This will allow you to view videos (like YouTube) internally!</string>
     <string name="do_not_show_again">Don\'t show again</string>
     <string name="enter_text_to_filter_click_enter_to_add_flair">Enter text to filter (subreddit:flair_text), click enter to add</string>
-    <plurals name="landscape_columns">
-        <item quantity="one">%d column in landscape</item>
-        <item quantity="other">%d columns in landscape</item>
-    </plurals>
     <string name="datasave_always">Mobile data and Wi-Fi</string>
     <string name="datasave_mobile">Mobile data</string>
     <string name="never">Never</string>
