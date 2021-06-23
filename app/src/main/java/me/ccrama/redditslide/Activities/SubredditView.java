@@ -93,6 +93,7 @@ import me.ccrama.redditslide.util.LayoutUtils;
 import me.ccrama.redditslide.util.LogUtil;
 import me.ccrama.redditslide.util.MiscUtil;
 import me.ccrama.redditslide.util.OnSingleClickListener;
+import me.ccrama.redditslide.util.PreferenceHelper;
 import me.ccrama.redditslide.util.ProUtil;
 import me.ccrama.redditslide.util.SortingUtil;
 import me.ccrama.redditslide.util.StringUtil;
@@ -415,13 +416,13 @@ public class SubredditView extends BaseActivity {
     public void onDestroy() {
         super.onDestroy();
         if (sub != null) {
-            if (sub.isNsfw() && (!SettingValues.storeHistory || !SettingValues.storeNSFWHistory)) {
+            if (sub.isNsfw() && (!PreferenceHelper.storeHistory() || !PreferenceHelper.storeNsfwHistory())) {
                 SharedPreferences.Editor e = Reddit.cachedData.edit();
                 for (String s : OfflineSubreddit.getAll(sub.getDisplayName())) {
                     e.remove(s);
                 }
                 e.apply();
-            } else if (!SettingValues.storeHistory) {
+            } else if (!PreferenceHelper.storeHistory()) {
                 SharedPreferences.Editor e = Reddit.cachedData.edit();
                 for (String s : OfflineSubreddit.getAll(sub.getDisplayName())) {
                     e.remove(s);
@@ -653,7 +654,7 @@ public class SubredditView extends BaseActivity {
                                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                                         @Override
                                         public void onClick(@NonNull MaterialDialog dialog,
-                                                @NonNull DialogAction which) {
+                                                            @NonNull DialogAction which) {
                                             Intent i = new Intent(SubredditView.this,
                                                     SendMessage.class);
                                             i.putExtra(SendMessage.EXTRA_NAME, "/r/" + subOverride);
@@ -1846,10 +1847,10 @@ public class SubredditView extends BaseActivity {
                 SubredditView.this.subreddit = sub.getDisplayName();
 
                 if (subreddit.isNsfw()
-                        && SettingValues.storeHistory
-                        && SettingValues.storeNSFWHistory) {
+                        && PreferenceHelper.storeHistory()
+                        && PreferenceHelper.storeNsfwHistory()) {
                     UserSubscriptions.addSubToHistory(subreddit.getDisplayName());
-                } else if (SettingValues.storeHistory && !subreddit.isNsfw()) {
+                } else if (PreferenceHelper.storeHistory() && !subreddit.isNsfw()) {
                     UserSubscriptions.addSubToHistory(subreddit.getDisplayName());
                 }
 

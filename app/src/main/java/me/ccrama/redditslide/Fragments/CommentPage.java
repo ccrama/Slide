@@ -115,6 +115,7 @@ import me.ccrama.redditslide.util.LinkUtil;
 import me.ccrama.redditslide.util.MiscUtil;
 import me.ccrama.redditslide.util.NetworkUtil;
 import me.ccrama.redditslide.util.OnSingleClickListener;
+import me.ccrama.redditslide.util.PreferenceHelper;
 import me.ccrama.redditslide.util.ProUtil;
 import me.ccrama.redditslide.util.StringUtil;
 import me.ccrama.redditslide.util.SubmissionParser;
@@ -149,7 +150,6 @@ public class CommentPage extends Fragment implements Toolbar.OnMenuItemClickList
     private boolean upvoted   = false;
     private boolean downvoted = false;
     private boolean currentlySubbed;
-    private boolean collapsed = SettingValues.collapseCommentsDefault;
 
 
     public void doResult(Intent data) {
@@ -323,11 +323,11 @@ public class CommentPage extends Fragment implements Toolbar.OnMenuItemClickList
         toolbar = v.findViewById(R.id.toolbar);
         toolbar.setPopupTheme(new ColorPreferences(getActivity()).getFontStyle().getBaseId());
 
-        if (!SettingValues.fabComments || archived || np || locked) {
+        if (!PreferenceHelper.showCommentFab() || archived || np || locked) {
             v.findViewById(R.id.comment_floating_action_button).setVisibility(View.GONE);
         } else {
             fab = v.findViewById(R.id.comment_floating_action_button);
-            if (SettingValues.fastscroll) {
+            if (PreferenceHelper.parentCommentNav()) {
                 FrameLayout.LayoutParams fabs = (FrameLayout.LayoutParams) fab.getLayoutParams();
                 fabs.setMargins(fabs.leftMargin, fabs.topMargin, fabs.rightMargin,
                         fabs.bottomMargin * 3);
@@ -426,10 +426,10 @@ public class CommentPage extends Fragment implements Toolbar.OnMenuItemClickList
         if (fab != null) fab.show();
         resetScroll(false);
         fastScroll = v.findViewById(R.id.commentnav);
-        if (!SettingValues.fastscroll) {
+        if (!PreferenceHelper.parentCommentNav()) {
             fastScroll.setVisibility(View.GONE);
         } else {
-            if (!SettingValues.showCollapseExpand) {
+            if (!PreferenceHelper.showCollapseExpandButton()) {
                 v.findViewById(R.id.collapse_expand).setVisibility(View.GONE);
             } else {
                 v.findViewById(R.id.collapse_expand).setVisibility(View.VISIBLE);
@@ -437,12 +437,11 @@ public class CommentPage extends Fragment implements Toolbar.OnMenuItemClickList
                     @Override
                     public void onClick(View v) {
                         if (adapter != null) {
-                            if (collapsed) {
-                                adapter.expandAll();
-                            } else {
+                            if (PreferenceHelper.collapseChildComments()) {
                                 adapter.collapseAll();
+                            } else {
+                                adapter.expandAll();
                             }
-                            collapsed = !collapsed;
                         }
                     }
                 });
@@ -608,7 +607,7 @@ public class CommentPage extends Fragment implements Toolbar.OnMenuItemClickList
             }
         });
 
-        if (SettingValues.voteGestures) {
+        if (PreferenceHelper.navbarVoteGestures()) {
             v.findViewById(R.id.up).setOnTouchListener(new OnFlingGestureListener() {
                 @Override
                 public void onRightToLeft() {
@@ -641,7 +640,7 @@ public class CommentPage extends Fragment implements Toolbar.OnMenuItemClickList
             });
         }
 
-        if (SettingValues.voteGestures) {
+        if (PreferenceHelper.navbarVoteGestures()) {
             v.findViewById(R.id.down).setOnTouchListener(new OnFlingGestureListener() {
                 @Override
                 public void onRightToLeft() {
@@ -1700,7 +1699,7 @@ public class CommentPage extends Fragment implements Toolbar.OnMenuItemClickList
             adapter.currentSelectedItem = context;
 
             if (context.isEmpty()) {
-                if (SettingValues.collapseCommentsDefault) {
+                if (PreferenceHelper.collapseChildComments()) {
                     adapter.collapseAll();
                 }
             }
@@ -1710,7 +1709,7 @@ public class CommentPage extends Fragment implements Toolbar.OnMenuItemClickList
             try {
                 adapter.reset(getContext(), comments, rv, (getActivity() instanceof MainActivity)
                         ? ((MainActivity) getActivity()).openingComments : comments.submission, b);
-                if (SettingValues.collapseCommentsDefault) {
+                if (PreferenceHelper.collapseChildComments()) {
                     adapter.collapseAll();
                 }
             } catch (Exception ignored) {
@@ -1718,7 +1717,7 @@ public class CommentPage extends Fragment implements Toolbar.OnMenuItemClickList
 
         } else {
             adapter.reset(getContext(), comments, rv, comments.submission, b);
-            if (SettingValues.collapseCommentsDefault) {
+            if (PreferenceHelper.collapseChildComments()) {
                 adapter.collapseAll();
             }
             adapter.notifyItemChanged(1);
@@ -1786,11 +1785,11 @@ public class CommentPage extends Fragment implements Toolbar.OnMenuItemClickList
         if (toolbarScroll == null) {
             toolbarScroll = new ToolbarScrollHideHandler(toolbar, v.findViewById(R.id.header),
                     v.findViewById(R.id.progress),
-                    SettingValues.commentAutoHide ? v.findViewById(R.id.commentnav) : null) {
+                    PreferenceHelper.autohideCommentNavBar() ? v.findViewById(R.id.commentnav) : null) {
                 @Override
                 public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);
-                    if (SettingValues.fabComments) {
+                    if (PreferenceHelper.showCommentFab()) {
                         if (recyclerView.getScrollState() == RecyclerView.SCROLL_STATE_DRAGGING
                                 && !overrideFab) {
                             diff += dy;

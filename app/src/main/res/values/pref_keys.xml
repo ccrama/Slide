@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         ALL PREFERENCE KEYS ARE IN ORDER ACCORDING TO THEIR ORDER IN THE SETTINGS HIERARCHY.
+         PLEASE ADHERE TO THIS ORGANIZATION WHEN ADDING NEW SETTINGS.
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    -->
+
+    <!-- preferences (MAIN SETTINGS PAGE - THE ROOT) -->
+    <!-- General -->
+    <string name="prefKey_general">prefKey_general</string>
+    <string name="prefKey_multiColumn">prefKey_multiColumn</string>
+    <string name="prefKey_manageSubreddits">prefKey_manageSubreddits</string>
+    <string name="prefKey_manageOfflineContent">prefKey_manageOfflineContent</string>
+    <string name="prefKey_moderation">prefKey_moderation</string>
+    <!-- Appearance -->
+    <string name="prefKey_mainTheme">prefKey_mainTheme</string>
+    <string name="prefKey_postLayout">prefKey_postLayout</string>
+    <string name="prefKey_subredditThemes">prefKey_subredditThemes</string>
+    <string name="prefKey_font">prefKey_font</string>
+    <string name="prefKey_comments">prefKey_comments</string>
+    <!-- Content -->
+    <string name="prefKey_linkHandling">prefKey_linkHandling</string>
+    <string name="prefKey_history">prefKey_history</string>
+    <string name="prefKey_dataSaving">prefKey_dataSaving</string>
+    <string name="prefKey_filterList">prefKey_filterList</string>
+    <string name="prefKey_redditContent">prefKey_redditContent</string>
+    <!-- Other -->
+    <string name="prefKey_backupRestore">prefKey_backupRestore</string>
+    <string name="prefKey_synccit">prefKey_synccit</string>
+    <string name="prefKey_proUpgrade">prefKey_proUpgrade</string>
+    <string name="prefKey_donate">prefKey_donate</string>
+    <string name="prefKey_about">prefKey_about</string>
+
+
+    <!-- preferences_multicolumn -->
+    <string name="prefKey_multicolumn_landscapeSeekbar">prefKey_multicolumn_landscapeSeekbar</string>
+    <string name="prefKey_multicolumn_singleColumnMultiWindow">prefKey_multicolumn_singleColumnMultiWindow</string>
+    <string name="prefKey_multicolumn_portraitModeDualColumns">prefKey_multicolumn_portraitModeDualColumns</string>
+    <string name="prefKey_multicolumn_forceFullCommentView">prefKey_multicolumn_forceFullCommentView</string>
+
+
+    <!-- preferences_comments -->
+    <string name="prefKey_comments_cropImage">prefKey_comments_cropImage</string>
+    <string name="prefKey_comments_colorCommentDepth">prefKey_comments_colorCommentDepth</string>
+    <string name="prefKey_comments_highlightCommentOp">prefKey_comments_highlightCommentOp</string>
+    <string name="prefKey_comments_wideDepth">prefKey_comments_wideDepth</string>
+    <string name="prefKey_comments_showCommentFab">prefKey_comments_showCommentFab</string>
+    <string name="prefKey_comments_rightHandedComments">prefKey_comments_rightHandedComments</string>
+    <string name="prefKey_comments_showUpvotePercentage">prefKey_comments_showUpvotePercentage</string>
+    <string name="prefKey_comments_coloredTimeBubble">prefKey_comments_coloredTimeBubble</string>
+    <string name="prefKey_comments_hideCommentAwards">prefKey_comments_hideCommentAwards</string>
+    <string name="prefKey_comments_parentCommentNav">prefKey_comments_parentCommentNav</string>
+    <string name="prefKey_comments_autohideCommentNavbar">prefKey_comments_autohideCommentNavbar</string>
+    <string name="prefKey_comments_showCollapseExpandButton">prefKey_comments_showCollapseExpandButton</string>
+    <string name="prefKey_comments_volumeNavComments">prefKey_comments_volumeNavComments</string>
+    <string name="prefKey_comments_navbarVoteGestures">prefKey_comments_navbarVoteGestures</string>
+    <string name="prefKey_comments_swapLongpressTap">prefKey_comments_swapLongpressTap</string>
+    <string name="prefKey_comments_fullyCollapseComments">prefKey_comments_fullyCollapseComments</string>
+    <string name="prefKey_comments_collapseChildComments">prefKey_comments_collapseChildComments</string>
+    <string name="prefKey_comments_collapseDeletedComments">prefKey_comments_collapseDeletedComments</string>
+
+
+    <!-- preferences_history -->
+    <string name="prefKey_history_storeHistory">prefKey_history_storeHistory</string>
+    <string name="prefKey_history_storeNsfwHistory">prefKey_history_storeNsfwHistory</string>
+    <string name="prefKey_history_scrollSeen">prefKey_history_scrollSeen</string>
+    <string name="prefKey_history_clearSubmissionHistory">prefKey_history_clearSubmissionHistory</string>
+    <string name="prefKey_history_clearSubredditHistory">prefKey_history_clearSubredditHistory</string>
+
+</resources>

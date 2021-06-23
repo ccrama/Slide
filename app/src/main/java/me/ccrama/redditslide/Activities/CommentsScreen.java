@@ -36,6 +36,7 @@ import me.ccrama.redditslide.Reddit;
 import me.ccrama.redditslide.SettingValues;
 import me.ccrama.redditslide.Visuals.Palette;
 import me.ccrama.redditslide.util.KeyboardUtil;
+import me.ccrama.redditslide.util.PreferenceHelper;
 
 /**
  * This activity is responsible for the view when clicking on a post, showing the post and its
@@ -69,7 +70,7 @@ public class CommentsScreen extends BaseActivityAnim implements SubmissionDispla
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         int keyCode = event.getKeyCode();
-        if (SettingValues.commentVolumeNav) {
+        if (PreferenceHelper.volumeNavComments()) {
             switch (keyCode) {
                 case KeyEvent.KEYCODE_VOLUME_UP:
                 case KeyEvent.KEYCODE_VOLUME_DOWN:
@@ -125,7 +126,7 @@ public class CommentsScreen extends BaseActivityAnim implements SubmissionDispla
         popup = SettingValues.isPro
                 && getResources().getConfiguration().orientation
                 == Configuration.ORIENTATION_LANDSCAPE
-                && !SettingValues.fullCommentOverride;
+                && !PreferenceHelper.forceFullCommentView();
         seen = new ArrayList<>();
         if (popup) {
             disableSwipeBackLayout();
@@ -264,7 +265,7 @@ public class CommentsScreen extends BaseActivityAnim implements SubmissionDispla
 
     @Override
     public void updateSuccess(final List<Submission> submissions, final int startIndex) {
-        if (SettingValues.storeHistory) LastComments.setCommentsSince(submissions);
+        if (PreferenceHelper.storeHistory()) LastComments.setCommentsSince(submissions);
         currentPosts.clear();
         currentPosts.addAll(submissions);
         runOnUiThread(new Runnable() {

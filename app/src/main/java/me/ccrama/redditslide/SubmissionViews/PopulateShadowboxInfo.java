@@ -59,6 +59,7 @@ import me.ccrama.redditslide.Vote;
 import me.ccrama.redditslide.util.ClipboardUtil;
 import me.ccrama.redditslide.util.CompatUtil;
 import me.ccrama.redditslide.util.LinkUtil;
+import me.ccrama.redditslide.util.PreferenceHelper;
 import me.ccrama.redditslide.util.TimeUtils;
 
 /**
@@ -199,8 +200,8 @@ public class PopulateShadowboxInfo {
                                 public void onClick(View view) {
                                     ((SlidingUpPanelLayout) rootView.findViewById(R.id.sliding_layout)).setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
 
-                                    if (SettingValues.storeHistory) {
-                                        if (!s.isNsfw() || SettingValues.storeNSFWHistory) {
+                                    if (PreferenceHelper.storeHistory()) {
+                                        if (!s.isNsfw() || PreferenceHelper.storeNsfwHistory()) {
                                             HasSeen.addSeen(s.getFullName());
                                         }
                                     }
@@ -232,8 +233,8 @@ public class PopulateShadowboxInfo {
                                 public void onClick(View view) {
                                     ((SlidingUpPanelLayout) rootView.findViewById(R.id.sliding_layout)).setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
 
-                                    if (SettingValues.storeHistory) {
-                                        if (!s.isNsfw() || SettingValues.storeNSFWHistory) {
+                                    if (PreferenceHelper.storeHistory()) {
+                                        if (!s.isNsfw() || PreferenceHelper.storeNsfwHistory()) {
                                             HasSeen.addSeen(s.getFullName());
                                         }
                                     }

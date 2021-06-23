@@ -121,6 +121,7 @@ import me.ccrama.redditslide.util.LayoutUtils;
 import me.ccrama.redditslide.util.LinkUtil;
 import me.ccrama.redditslide.util.NetworkUtil;
 import me.ccrama.redditslide.util.OnSingleClickListener;
+import me.ccrama.redditslide.util.PreferenceHelper;
 import me.ccrama.redditslide.util.SubmissionParser;
 
 import static me.ccrama.redditslide.Notifications.ImageDownloadNotificationService.EXTRA_SUBMISSION_TITLE;
@@ -141,8 +142,8 @@ public class PopulateSubmissionViewHolder {
             public void onSingleClick(View v) {
                 if (NetworkUtil.isConnected(contextActivity) || (!NetworkUtil.isConnected(
                         contextActivity) && ContentType.fullImage(type))) {
-                    if (SettingValues.storeHistory && !full) {
-                        if (!submission.isNsfw() || SettingValues.storeNSFWHistory) {
+                    if (PreferenceHelper.storeHistory() && !full) {
+                        if (!submission.isNsfw() || PreferenceHelper.storeNsfwHistory()) {
                             HasSeen.addSeen(submission.getFullName());
                             if (contextActivity instanceof MainActivity
                                     || contextActivity instanceof MultiredditOverview
@@ -811,9 +812,9 @@ public class PopulateSubmissionViewHolder {
                     break;
                     case 7:
                         LinkUtil.openExternally(submission.getUrl());
-                        if (submission.isNsfw() && !SettingValues.storeNSFWHistory) {
+                        if (submission.isNsfw() && !PreferenceHelper.storeNsfwHistory()) {
                             //Do nothing if the post is NSFW and storeNSFWHistory is not enabled
-                        } else if (SettingValues.storeHistory) {
+                        } else if (PreferenceHelper.storeHistory()) {
                             HasSeen.addSeen(submission.getFullName());
                         }
                         break;
@@ -2478,7 +2479,7 @@ public class PopulateSubmissionViewHolder {
         holder.comments.setText(String.format(Locale.getDefault(), "%d %s", commentCount,
                 ((more > 0 && SettingValues.commentLastVisit) ? "(+" + more + ")" : "")));
         String scoreRatio =
-                (SettingValues.upvotePercentage && full && submission.getUpvoteRatio() != null) ?
+                (PreferenceHelper.showUpvotePercentage() && full && submission.getUpvoteRatio() != null) ?
                         "("
                                 + (int) (submission.getUpvoteRatio() * 100)
                                 + "%)" : "";
@@ -2769,8 +2770,8 @@ public class PopulateSubmissionViewHolder {
                     downvotebutton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            if (SettingValues.storeHistory && !full) {
-                                if (!submission.isNsfw() || SettingValues.storeNSFWHistory) {
+                            if (PreferenceHelper.storeHistory() && !full) {
+                                if (!submission.isNsfw() || PreferenceHelper.storeNsfwHistory()) {
                                     HasSeen.addSeen(submission.getFullName());
                                     if (mContext instanceof MainActivity) {
                                         holder.title.setAlpha(0.54f);
@@ -2828,8 +2829,8 @@ public class PopulateSubmissionViewHolder {
                     upvotebutton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            if (SettingValues.storeHistory && !full) {
-                                if (!submission.isNsfw() || SettingValues.storeNSFWHistory) {
+                            if (PreferenceHelper.storeHistory() && !full) {
+                                if (!submission.isNsfw() || PreferenceHelper.storeNsfwHistory()) {
                                     HasSeen.addSeen(submission.getFullName());
                                     if (mContext instanceof MainActivity) {
                                         holder.title.setAlpha(0.54f);

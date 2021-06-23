@@ -40,6 +40,7 @@ import me.ccrama.redditslide.Synccit.MySynccitReadTask;
 import me.ccrama.redditslide.util.LogUtil;
 import me.ccrama.redditslide.util.NetworkUtil;
 import me.ccrama.redditslide.util.PhotoLoader;
+import me.ccrama.redditslide.util.PreferenceHelper;
 import me.ccrama.redditslide.util.TimeUtils;
 
 /**
@@ -242,7 +243,7 @@ public class SubredditPostsRealm implements PostLoader {
                     && SettingValues.lowResMobile) || SettingValues.lowResAlways))) {
                 PhotoLoader.loadPhotos(c, filteredSubmissions);
             }
-            if (SettingValues.storeHistory) {
+            if (PreferenceHelper.storeHistory()) {
                 HasSeen.setHasSeenSubmission(filteredSubmissions);
                 LastComments.setCommentsSince(filteredSubmissions);
             }

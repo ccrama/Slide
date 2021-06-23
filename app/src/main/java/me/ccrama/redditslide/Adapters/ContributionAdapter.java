@@ -56,6 +56,7 @@ import me.ccrama.redditslide.util.CompatUtil;
 import me.ccrama.redditslide.util.LayoutUtils;
 import me.ccrama.redditslide.util.LinkUtil;
 import me.ccrama.redditslide.util.MiscUtil;
+import me.ccrama.redditslide.util.PreferenceHelper;
 import me.ccrama.redditslide.util.SubmissionParser;
 import me.ccrama.redditslide.util.TimeUtils;
 
@@ -296,8 +297,8 @@ public class ContributionAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     String url = "www.reddit.com" + submission.getPermalink();
                     url = url.replace("?ref=search_posts", "");
                     new OpenRedditLink(mContext, url);
-                    if (SettingValues.storeHistory) {
-                        if (SettingValues.storeNSFWHistory && submission.isNsfw() || !submission.isNsfw())
+                    if (PreferenceHelper.storeHistory()) {
+                        if (PreferenceHelper.storeNsfwHistory() && submission.isNsfw() || !submission.isNsfw())
                             HasSeen.addSeen(submission.getFullName());
                     }
 
@@ -370,7 +371,7 @@ public class ContributionAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             holder.content.setTypeface(typeface);
 
             ((TextView) holder.gild).setText("");
-            if (!SettingValues.hideCommentAwards && (comment.getTimesSilvered() > 0 || comment.getTimesGilded() > 0  || comment.getTimesPlatinized() > 0)) {
+            if (!PreferenceHelper.hideCommentAwards() && (comment.getTimesSilvered() > 0 || comment.getTimesGilded() > 0  || comment.getTimesPlatinized() > 0)) {
                 TypedArray a = mContext.obtainStyledAttributes(
                         new FontPreferences(mContext).getPostFontStyle().getResId(),
                         R.styleable.FontStyle);

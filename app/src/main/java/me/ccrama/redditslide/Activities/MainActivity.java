@@ -179,6 +179,7 @@ import me.ccrama.redditslide.util.MiscUtil;
 import me.ccrama.redditslide.util.NetworkStateReceiver;
 import me.ccrama.redditslide.util.NetworkUtil;
 import me.ccrama.redditslide.util.OnSingleClickListener;
+import me.ccrama.redditslide.util.PreferenceHelper;
 import me.ccrama.redditslide.util.ProUtil;
 import me.ccrama.redditslide.util.SortingUtil;
 import me.ccrama.redditslide.util.StringUtil;
@@ -465,9 +466,9 @@ public class MainActivity extends BaseActivity
         if (pager != null
                 && SettingValues.commentPager
                 && pager.getCurrentItem() == toOpenComments
-                && SettingValues.commentVolumeNav
+                && PreferenceHelper.volumeNavComments()
                 && pager.getAdapter() instanceof MainPagerAdapterComment) {
-            if (SettingValues.commentVolumeNav) {
+            if (PreferenceHelper.volumeNavComments()) {
                 switch (keyCode) {
                     case KeyEvent.KEYCODE_VOLUME_UP:
                     case KeyEvent.KEYCODE_VOLUME_DOWN:

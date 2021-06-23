@@ -48,6 +48,7 @@ import me.ccrama.redditslide.Visuals.Palette;
 import me.ccrama.redditslide.util.CompatUtil;
 import me.ccrama.redditslide.util.LogUtil;
 import me.ccrama.redditslide.util.MiscUtil;
+import me.ccrama.redditslide.util.PreferenceHelper;
 import me.ccrama.redditslide.util.SubmissionParser;
 import me.ccrama.redditslide.util.TimeUtils;
 
@@ -417,7 +418,7 @@ public class RedditItemView extends RelativeLayout {
         }
         holder.content.setTypeface(typeface);
 
-        if (!SettingValues.hideCommentAwards && (comment.getTimesSilvered() > 0 || comment.getTimesGilded() > 0  || comment.getTimesPlatinized() > 0)) {
+        if (!PreferenceHelper.hideCommentAwards() && (comment.getTimesSilvered() > 0 || comment.getTimesGilded() > 0  || comment.getTimesPlatinized() > 0)) {
             TypedArray a = getContext().obtainStyledAttributes(
                     new FontPreferences(getContext()).getPostFontStyle().getResId(),
                     R.styleable.FontStyle);
@@ -457,7 +458,7 @@ public class RedditItemView extends RelativeLayout {
     }
 
     private void setViews(String rawHTML, String subreddit, SpoilerRobotoTextView firstTextView,
-            CommentOverflow commentOverflow) {
+                          CommentOverflow commentOverflow) {
         if (rawHTML.isEmpty()) {
             return;
         }

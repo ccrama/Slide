@@ -49,7 +49,7 @@ import me.ccrama.redditslide.Views.CreateCardView;
 import me.ccrama.redditslide.Visuals.Palette;
 import me.ccrama.redditslide.handler.ToolbarScrollHideHandler;
 import me.ccrama.redditslide.util.LayoutUtils;
-import me.ccrama.redditslide.util.LogUtil;
+import me.ccrama.redditslide.util.PreferenceHelper;
 
 public class MultiredditView extends Fragment implements SubmissionDisplay {
 
@@ -278,7 +278,7 @@ public class MultiredditView extends Fragment implements SubmissionDisplay {
                     if (firstVisibleItems != null && firstVisibleItems.length > 0) {
                         for (int firstVisibleItem : firstVisibleItems) {
                             pastVisiblesItems = firstVisibleItem;
-                            if (SettingValues.scrollSeen && pastVisiblesItems > 0 && SettingValues.storeHistory) {
+                            if (PreferenceHelper.scrollSeen() && pastVisiblesItems > 0 && PreferenceHelper.storeHistory()) {
                                 HasSeen.addSeenScrolling(posts.posts.get(pastVisiblesItems - 1).getFullName());
                             }
                         }

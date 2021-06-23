@@ -70,6 +70,7 @@ import me.ccrama.redditslide.util.GifCache;
 import me.ccrama.redditslide.util.ImageLoaderUtils;
 import me.ccrama.redditslide.util.LogUtil;
 import me.ccrama.redditslide.util.NetworkUtil;
+import me.ccrama.redditslide.util.PreferenceHelper;
 import me.ccrama.redditslide.util.SortingUtil;
 import me.ccrama.redditslide.util.UpgradeUtil;
 import me.ccrama.redditslide.util.billing.IabHelper;
@@ -397,6 +398,7 @@ public class Reddit extends MultiDexApplication implements Application.ActivityL
         DatabaseProvider databaseProvider = new ExoDatabaseProvider(getAppContext());
         videoCache = new SimpleCache(dir, evictor, databaseProvider); // 256MB
 
+        PreferenceHelper.init(this);
         UpgradeUtil.upgrade(getApplicationContext());
         doMainStuff();
     }

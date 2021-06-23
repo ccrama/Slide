@@ -31,11 +31,11 @@ import me.ccrama.redditslide.LastComments;
 import me.ccrama.redditslide.Notifications.NotificationJobScheduler;
 import me.ccrama.redditslide.R;
 import me.ccrama.redditslide.Reddit;
-import me.ccrama.redditslide.SettingValues;
 import me.ccrama.redditslide.SwipeLayout.Utils;
 import me.ccrama.redditslide.UserSubscriptions;
 import me.ccrama.redditslide.Visuals.Palette;
 import me.ccrama.redditslide.util.LogUtil;
+import me.ccrama.redditslide.util.PreferenceHelper;
 
 /**
  * Created by ccrama on 9/17/2015.
@@ -72,7 +72,7 @@ public class CommentsScreenSingle extends BaseActivityAnim {
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         int keyCode = event.getKeyCode();
-        if (SettingValues.commentVolumeNav) {
+        if (PreferenceHelper.volumeNavComments()) {
 
             switch (keyCode) {
                 case KeyEvent.KEYCODE_VOLUME_UP:
@@ -213,8 +213,8 @@ public class CommentsScreenSingle extends BaseActivityAnim {
         protected String doInBackground(String... params) {
             try {
                 final Submission s = Authentication.reddit.getSubmission(params[0]);
-                if (SettingValues.storeHistory) {
-                    if (SettingValues.storeNSFWHistory && s.isNsfw() || !s.isNsfw()) {
+                if (PreferenceHelper.storeHistory()) {
+                    if (PreferenceHelper.storeNsfwHistory() && s.isNsfw() || !s.isNsfw()) {
                         HasSeen.addSeen(s.getFullName());
                     }
                     LastComments.setComments(s);
@@ -290,7 +290,7 @@ public class CommentsScreenSingle extends BaseActivityAnim {
 
                 args.putString("id", name);
                 args.putString("context", context);
-                if (SettingValues.storeHistory) {
+                if (PreferenceHelper.storeHistory()) {
                     if (context != null && !context.isEmpty() && !context.equals(
                             Reddit.EMPTY_STRING)) {
                         HasSeen.addSeen("t1_" + context);
